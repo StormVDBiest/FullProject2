@@ -151,6 +151,8 @@ namespace Worker
 
             WriteToBlob(jsonString);
 
+
+
             return imageLink;
         }
         
