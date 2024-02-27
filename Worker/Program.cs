@@ -155,12 +155,10 @@ namespace Worker
                 P.Add(prediction);
             }
 
-            string jsonString = JsonSerializer.Serialize(P);
+            R.Predictions = P;
+            UploadJson(R);
 
-
-            UploadJson(R, P);
-
-            WriteToBlob(jsonString);
+            //WriteToBlob(jsonString);
 
             return imageLink;
         }
@@ -211,11 +209,34 @@ namespace Worker
             Console.WriteLine("File upload complete");
         }
 
-        public static void UploadJson(Result R, List<Prediction> P)
+        public static void UploadJson(Result R)
         {
+            RawImageModel rawImageModel = new RawImageModel();
+            rawImageModel.GUID = Guid.NewGuid();
+            rawImageModel.ImgURL = "test";
 
+            R.RawImage = rawImageModel;
+            
 
+            Console.WriteLine("Starting Json upload...");
 
+            R.GUID = Guid.NewGuid();
+
+            var container = new BlobContainerClient(blobStorageConnectionString, blobContainerResult);
+            var blob = container.GetBlobClient(R.GUID.ToString());
+
+            string jsonString = JsonSerializer.Serialize(R);
+            var content = Encoding.UTF8.GetBytes(jsonString);
+
+            using (var ms = new MemoryStream(content))
+                blob.Upload(ms);
+
+            string uploadedLink = blob.Uri.ToString();
+
+            BlobDownloadResult downloadResult = blob.DownloadContent();
+            string blobContents = downloadResult.Content.ToString();
+
+            Console.WriteLine("File upload complete");
         }
     }
 }

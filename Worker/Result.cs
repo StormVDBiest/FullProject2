@@ -9,21 +9,21 @@ namespace Worker
 {
     internal class Result
     {
-        [JsonProperty(PropertyName = "guid")]
         public Guid GUID { get; set; }
-
-        [JsonProperty(PropertyName = "rawimage")]
-        public string RawImage { get; set; }
-
+        public RawImageModel RawImage { get; set; }
+        public List<Prediction> Predictions { get; set; } = new List<Prediction>();
     }
+
     public class Prediction()
     {
-        [JsonProperty(PropertyName = "probability")]
         public double probability { get; set; }
-
-        [JsonProperty(PropertyName = "tagname")]
         public string TagName { get; set; }
-
-        
     }
+
+    public class RawImageModel()
+    {
+        public Guid GUID { get; set; }
+        public string ImgURL { get; set; }
+    }
+    
 }
