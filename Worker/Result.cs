@@ -12,9 +12,6 @@ namespace Worker
         [JsonProperty(PropertyName = "guid")]
         public Guid GUID { get; set; }
 
-        [JsonProperty(PropertyName = "predictions")]
-        public List<Prediction> Predictions { get; set; }
-
         [JsonProperty(PropertyName = "rawimage")]
         public string RawImage { get; set; }
 

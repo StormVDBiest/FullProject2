@@ -32,7 +32,7 @@ namespace Worker
         public static string predictionKey = "48c100aca3294956ae35ba67f5ae9f33";
         public static string predictionResourceId = "/subscriptions/c0aa556b-f65a-4ea4-9ec8-0ed460de5436/resourceGroups/BirdDetectionVisionAI/providers/Microsoft.CognitiveServices/accounts/BirdDetectionAI-Prediction";
 
-        public static string watchedFolder = "C:\\Users\\Leerlingen\\Source\\Repos\\FullProject2\\Worker\\Watched\\";
+        public static string watchedFolder = "C:\\Users\\Leerlingen\\Desktop\\Vision AI\\Gitclone\\Worker\\Watched\\";
 
         private static string publishedModelName = "Iteration1";
 
@@ -118,7 +118,7 @@ namespace Worker
 
         public static string WriteImageToBlob(string path)
         {
-            Prediction P = new Prediction();
+            List<Prediction> P = new List<Prediction>();
             Result R = new Result();
 
             Console.WriteLine("Starting...");
@@ -149,13 +149,13 @@ namespace Worker
             {
                 Console.WriteLine(item.TagName + ":" + item.Probability + "%");
 
-                /*Prediction prediction = new Prediction();
+                Prediction prediction = new Prediction();
                 prediction.TagName = item.TagName;
                 prediction.probability = item.Probability;
-                R.Predictions.Add(prediction);*/
+                P.Add(prediction);
             }
 
-            string jsonString = JsonSerializer.Serialize(predict);
+            string jsonString = JsonSerializer.Serialize(P);
 
 
             UploadJson(R, P);
@@ -211,7 +211,7 @@ namespace Worker
             Console.WriteLine("File upload complete");
         }
 
-        public static void UploadJson(Result R, Prediction P)
+        public static void UploadJson(Result R, List<Prediction> P)
         {
 
 
