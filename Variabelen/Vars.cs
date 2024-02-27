@@ -1,5 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,7 +25,6 @@ namespace Variabelen
         public static string predictionKey = "48c100aca3294956ae35ba67f5ae9f33";
         public static string predictionResourceId = "/subscriptions/c0aa556b-f65a-4ea4-9ec8-0ed460de5436/resourceGroups/BirdDetectionVisionAI/providers/Microsoft.CognitiveServices/accounts/BirdDetectionAI-Prediction";
 
-        public static Iteration iteration;
         public static string publishedModelName = "Iteration1";
 
         public static MemoryStream testImage;
