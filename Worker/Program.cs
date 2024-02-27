@@ -118,6 +118,9 @@ namespace Worker
 
         public static string WriteImageToBlob(string path)
         {
+            Prediction P = new Prediction();
+            Result R = new Result();
+
             Console.WriteLine("Starting...");
 
             Guid uniqueID = Guid.NewGuid();
@@ -145,11 +148,17 @@ namespace Worker
             foreach (var item in predict.Predictions)
             {
                 Console.WriteLine(item.TagName + ":" + item.Probability + "%");
+
+                /*Prediction prediction = new Prediction();
+                prediction.TagName = item.TagName;
+                prediction.probability = item.Probability;
+                R.Predictions.Add(prediction);*/
             }
 
             string jsonString = JsonSerializer.Serialize(predict);
 
-            UploadJson(predict);
+
+            UploadJson(R, P);
 
             WriteToBlob(jsonString);
 
@@ -202,10 +211,9 @@ namespace Worker
             Console.WriteLine("File upload complete");
         }
 
-        public static void UploadJson(Predict.ImagePrediction predict)
+        public static void UploadJson(Result R, Prediction P)
         {
-            Result R = new Result();
-            Prediction P = new Prediction();
+
 
 
         }
