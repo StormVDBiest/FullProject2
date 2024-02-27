@@ -19,7 +19,7 @@ namespace Variabelen
         public static string trainingEndpoint = "https://birddetectionai.cognitiveservices.azure.com/";
         public static string trainingKey = "7eb92455c73b4f268a6890ae2f07a8b0";
 
-        public static string projectName = "stormBirdFeeder";
+        public static string projectName = "stormBirdFeeder3";
 
         public static string predictionEndpoint = "https://birddetectionai-prediction.cognitiveservices.azure.com/";
         public static string predictionKey = "48c100aca3294956ae35ba67f5ae9f33";

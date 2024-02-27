@@ -13,7 +13,7 @@ namespace Seeder
 
     internal class Program
     {
-        public static string pathToSeed = "Images/";
+        public static string pathToSeed = "ImagesSeeder/";
 
         public static string blobStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=stormtestsand1;AccountKey=bc6y3LZ5BWNDV/5BBVPVFwZy4SjUHne7zOm2gOo37aglqSdg+P2p2JnDzb3yqQzhPYk8Ate0it6s+ASttRGaeg==;EndpointSuffix=core.windows.net";
         public static string blobStorageContainerNameUpload = "fileupload";
@@ -23,7 +23,7 @@ namespace Seeder
         public static string trainingEndpoint = "https://birddetectionai.cognitiveservices.azure.com/";
         public static string trainingKey = "7eb92455c73b4f268a6890ae2f07a8b0";
 
-        public static string projectName = "stormBirdFeeder2";
+        public static string projectName = "stormBirdFeeder3";
 
         public static string predictionEndpoint = "https://birddetectionai-prediction.cognitiveservices.azure.com/";
         public static string predictionKey = "48c100aca3294956ae35ba67f5ae9f33";
@@ -41,6 +41,7 @@ namespace Seeder
 
             Project project = AssertProject(trainingApi);
             UploadImages(trainingApi, project);
+            Console.WriteLine("Done Uploading\nPress any key to close");
             Console.ReadLine();
         }
 
