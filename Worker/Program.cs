@@ -202,6 +202,12 @@ namespace Worker
             Console.WriteLine("File upload complete");
         }
 
-        
+        public static void UploadJson(Predict.ImagePrediction predict)
+        {
+            Result R = new Result();
+            Prediction P = new Prediction();
+
+
+        }
     }
 }
