@@ -32,7 +32,7 @@ namespace Worker
         public static string predictionKey = "48c100aca3294956ae35ba67f5ae9f33";
         public static string predictionResourceId = "/subscriptions/c0aa556b-f65a-4ea4-9ec8-0ed460de5436/resourceGroups/BirdDetectionVisionAI/providers/Microsoft.CognitiveServices/accounts/BirdDetectionAI-Prediction";
 
-        public static string watchedFolder = "C:\\Users\\storm\\Desktop\\FullProject\\FullProject\\Worker\\Watched\\";
+        public static string watchedFolder = "C:\\Users\\Leerlingen\\Source\\Repos\\FullProject2\\Worker\\Watched\\";
 
         private static string publishedModelName = "Iteration1";
 
@@ -149,6 +149,8 @@ namespace Worker
 
             string jsonString = JsonSerializer.Serialize(predict);
 
+            UploadJson(predict);
+
             WriteToBlob(jsonString);
 
             return imageLink;
@@ -199,9 +201,7 @@ namespace Worker
 
             Console.WriteLine("File upload complete");
         }
-    }
-    public class UploadJSON
-    {
 
+        
     }
 }
