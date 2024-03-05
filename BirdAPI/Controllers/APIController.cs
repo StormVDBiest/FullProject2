@@ -60,5 +60,15 @@ namespace BirdAPI.Controllers
 
             return result;
         }
+
+        [Route("api/deleteresult")]
+        [HttpGet]
+        public void DeleteResult(Guid guid)
+        {
+            BlobContainerClient container = new BlobContainerClient(blobStorageConnectionString, blobContainerResult);
+            var blob = container.GetBlobClient(guid.ToString());
+
+            blob.DeleteIfExists();
+        }
     }
 }

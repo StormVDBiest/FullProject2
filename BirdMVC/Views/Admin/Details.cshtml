@@ -1,0 +1,127 @@
+﻿@model BirdMVC.Models.Result
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Details Page</title>
+    <style>
+        body {
+            padding-top: 56px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+            .sidebar a {
+                padding: 15px 20px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #fff;
+                display: block;
+                transition: 0.2s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #555;
+                }
+
+        .card {
+            margin-bottom: 20px;
+            display: flex;
+        }
+
+            .card img {
+                max-width: 200px; /* Adjust the size as needed */
+                height: auto;
+                cursor: pointer;
+                margin-right: 20px;
+            }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .info-section {
+            flex: 1;
+        }
+
+        .btn-section {
+            align-self: flex-end;
+        }
+
+        .card-content {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .card-img-side {
+            width: 100%;
+            max-width: 400px; /* Set a maximum width for the image */
+            height: auto;
+            margin-right: 20px;
+        }
+
+        .card-body {
+            flex: 1; /* Make the card body use the remaining space */
+        }
+ }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="#" class="text-decoration-none text-white"><h2><i class="fas fa-cogs"></i> Admin Panel</h2></a>
+        <ul class="list-unstyled">
+            <li><a href="/admin/panel"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/admin/list"><i class="fas fa-list"></i> List</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-content">
+                <img src="@Model.RawImage.ImgURL" class="card-img-side" alt="Image">
+                <div class="card-body">
+                    <div class="info-section">
+                        <h5 class="card-title w-100">@Model.Predictions[0].TagName</h5>
+                        <ul class="list-group w-100">
+                            @foreach (var prediction in Model.Predictions)
+                            {
+                                <li class="list-group-item">@prediction.TagName: @prediction.Probability</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="btn-section w-100">
+                        <a href="/admin/list" class="btn btn-primary mt-2 w-25">Back to List</a>
+                        <a href="@Model.RawImage.ImgURL" target="_blank" class="btn btn-secondary mt-2 w-25">Open Image</a>
+                        <a href="/admin/delete?guid=@Model.GUID"><button class="btn btn-danger mt-2 w-25">Delete</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
