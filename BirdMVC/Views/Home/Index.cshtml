@@ -5,9 +5,9 @@
 <section>
     @foreach (BirdMVC.Models.Result f in Model)
     {
-        <div id="card">
+        <div id="card" style="height:auto; width:auto;">
             <div id="Image">
-                <img src="@f.RawImage.ImgURL" />
+                <img src="@f.RawImage.ImgURL" height="100px" width="100px"/>
             </div>
             <div id="predictions">
                 @foreach (BirdMVC.Models.Prediction item in f.Predictions)
