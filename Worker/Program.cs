@@ -204,9 +204,13 @@ namespace Worker
             {
                 Console.WriteLine(item.TagName + ":" + item.Probability + "%");
 
+                double berekening = item.Probability * 100;
+                int procent = (int)berekening;
+
                 Prediction prediction = new Prediction();
                 prediction.TagName = item.TagName;
-                prediction.probability = item.Probability;
+                prediction.Probability = procent;
+
                 P.Add(prediction);
             }
 

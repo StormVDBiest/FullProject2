@@ -14,7 +14,7 @@ namespace BirdMVC.Models
 
     public class Prediction()
     {
-        public double probability { get; set; }
+        public double Probability { get; set; }
         public string TagName { get; set; }
     }
 
