@@ -109,10 +109,11 @@ body {
                         <ol>
                             @foreach (BirdMVC.Models.Prediction item in f.Predictions)
                             {
+
                                 <li>@item.TagName - @item.Probability</li>
                             }
                         </ol>
-                            <button class="card__btn">Explore <span>&rarr;</span></button>
+                            <a href="/home/details?guid=@f.GUID"><button class="card__btn">Explore <span>&rarr;</span></button></a>
                     </div>
                 </div>
             </div>

@@ -23,9 +23,9 @@ namespace BirdAPI.Controllers
         public static string blobContainerRawImage = "rawimages";
         public static string blobContainerResult = "results";
 
-        [Route("api/getjson")]
+        [Route("api/getallresults")]
         [HttpGet]
-        public List<Result> GetJson() {
+        public List<Result> GetAllResults() {
             List<Result> results = new List<Result>();
 
             BlobContainerClient container = new BlobContainerClient(blobStorageConnectionString, blobContainerResult);
@@ -43,6 +43,22 @@ namespace BirdAPI.Controllers
 
            
             return results;
+        }
+
+
+        [Route("api/getresult")]
+        [HttpGet]
+        public Result GetResult(Guid guid)
+        {
+            BlobContainerClient container = new BlobContainerClient(blobStorageConnectionString, blobContainerResult);
+            var blob = container.GetBlobClient(guid.ToString());
+
+            BlobDownloadResult downloadResult = blob.DownloadContent();
+            string blobContents = downloadResult.Content.ToString();
+
+            Result result = JsonSerializer.Deserialize<Result>(blobContents);
+
+            return result;
         }
     }
 }
