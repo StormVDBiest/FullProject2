@@ -26,4 +26,5 @@ namespace Worker
         public string ImgURL { get; set; }
     }
     
+
 }

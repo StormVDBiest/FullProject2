@@ -22,6 +22,7 @@ namespace Worker
         
         public static string blobContainerRawImage = "rawimages";
         public static string blobContainerResult = "results";
+        public static string blobContainerThumbnail = "thumbnails";
 
         public static string trainingEndpoint = "https://birddetectionai.cognitiveservices.azure.com/";
         public static string trainingKey = "7eb92455c73b4f268a6890ae2f07a8b0";
@@ -113,10 +114,11 @@ namespace Worker
             string value = $"Created: {e.FullPath}";
             Console.WriteLine(value);
 
-            WriteImageToBlob(e.FullPath);
+            UploadRaw(e.FullPath);
+
         }
 
-        public static string WriteImageToBlob(string path)
+        public static string UploadRaw(string path)
         {
             List<Prediction> P = new List<Prediction>();
             Result R = new Result();
@@ -129,38 +131,15 @@ namespace Worker
             var blob = container.GetBlobClient(uniqueID.ToString());
             var result = blob.Upload(path);
 
-
-            string imageLink = blob.Uri.ToString();
-
+            string rawImageLink = blob.Uri.ToString();
 
             Console.WriteLine("File upload complete");
 
-            Console.WriteLine("Making a prediction:");
-
-            CustomVisionTrainingClient trainingApi = AuthenticateTraining(trainingEndpoint, trainingKey);
-            CustomVisionPredictionClient predictionApi = AuthenticatePrediction(predictionEndpoint, predictionKey);
-            Project project = AssertProject(trainingApi);
-
-            Predict.ImageUrl predictURL = new Predict.ImageUrl(imageLink);
+            R = Prediction(rawImageLink);
             
-            Predict.ImagePrediction predict = predictionApi.ClassifyImageUrl(project.Id, publishedModelName, predictURL);
+            UploadJson(R, rawImageLink);
 
-            foreach (var item in predict.Predictions)
-            {
-                Console.WriteLine(item.TagName + ":" + item.Probability + "%");
-
-                Prediction prediction = new Prediction();
-                prediction.TagName = item.TagName;
-                prediction.probability = item.Probability;
-                P.Add(prediction);
-            }
-
-            R.Predictions = P;
-            UploadJson(R, imageLink);
-
-            //WriteToBlob(jsonString);
-
-            return imageLink;
+            return rawImageLink;
         }
         
         private static void TestIteration(CustomVisionPredictionClient predictionApi, Project project, string URL)
@@ -178,37 +157,9 @@ namespace Worker
 
             string jsonString = JsonSerializer.Serialize(predict);
 
-            WriteToBlob(jsonString);
         }
 
-        public static void WriteToBlob(string path)
-        {
-            Console.WriteLine("Starting...");
-
-            Guid uniqueID = Guid.NewGuid();
-
-            var container = new BlobContainerClient(blobStorageConnectionString, blobContainerResult);
-            var blob = container.GetBlobClient(uniqueID.ToString());
-            //var result = blob.Upload(path);
-
-            var content = Encoding.UTF8.GetBytes(path);
-            using (var ms = new MemoryStream(content))
-                blob.Upload(ms);
-            string imageLink = blob.Uri.ToString();
-
-            /*var blobs = container.GetBlobs();
-            foreach (var item in blobs)
-            {
-                Console.WriteLine(item.Name);
-            }*/
-
-
-            BlobDownloadResult downloadResult = blob.DownloadContent();
-            string blobContents = downloadResult.Content.ToString();
-
-            Console.WriteLine("File upload complete");
-        }
-
+        
         public static void UploadJson(Result R, string imageLink)
         {
             RawImageModel rawImageModel = new RawImageModel();
@@ -216,8 +167,7 @@ namespace Worker
             rawImageModel.ImgURL = imageLink;
 
             R.RawImage = rawImageModel;
-            
-
+           
             Console.WriteLine("Starting Json upload...");
 
             R.GUID = Guid.NewGuid();
@@ -237,6 +187,34 @@ namespace Worker
             string blobContents = downloadResult.Content.ToString();
 
             Console.WriteLine("File upload complete");
+        }
+        private static Result Prediction(string imageLink)
+        {
+            Result R = new Result();
+            List<Prediction> P = new List<Prediction>();
+
+            Console.WriteLine("Making a prediction:");
+
+            CustomVisionTrainingClient trainingApi = AuthenticateTraining(trainingEndpoint, trainingKey);
+            CustomVisionPredictionClient predictionApi = AuthenticatePrediction(predictionEndpoint, predictionKey);
+            Project project = AssertProject(trainingApi);
+
+            Predict.ImageUrl predictURL = new Predict.ImageUrl(imageLink);
+
+            Predict.ImagePrediction predict = predictionApi.ClassifyImageUrl(project.Id, publishedModelName, predictURL);
+
+            foreach (var item in predict.Predictions)
+            {
+                Console.WriteLine(item.TagName + ":" + item.Probability + "%");
+
+                Prediction prediction = new Prediction();
+                prediction.TagName = item.TagName;
+                prediction.probability = item.Probability;
+                P.Add(prediction);
+            }
+
+            R.Predictions = P;
+            return R;
         }
     }
 }
