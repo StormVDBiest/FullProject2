@@ -1,20 +1,22 @@
 ﻿using Smartcrop;
-
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 namespace Tests
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            using (var image = File.OpenRead("image.jpg"))
+            /*Stream inStream = new(Stream.Null());
+            using (Image image = Image.Load(inStream))
             {
-                // find best crop
-                var result = new ImageCrop(200, 200).Crop(image);
-                
-                Console.WriteLine(
-                $"Best crop: {result.Area.X}, {result.Area.Y} - {result.Area.Width} x {result.Area.Height}");
-            }
-            
+                int width = image.Width / 2;
+                int height = image.Height / 2;
+                image.Mutate(x => x.Resize(width, height));
+
+                image.Save(outPath);
+            }*/
+
         }
     }
 }
