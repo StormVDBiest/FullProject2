@@ -16,7 +16,7 @@ namespace BirdMVC.Controllers
         public ActionResult Index()
         {
             string baseAddress = ConfigurationManager.AppSettings["APIUrl"];
-            Result waardes = new Result();
+            List<Result> results = new List<Result>();
 
             using (HttpClient client = new HttpClient())
             {
@@ -29,9 +29,9 @@ namespace BirdMVC.Controllers
 
                 string dataAsString = response.Content.ReadAsStringAsync().Result;
 
-                waardes = JsonConvert.DeserializeObject<Result>(dataAsString);
+                results = JsonConvert.DeserializeObject<List<Result>>(dataAsString);
 
-                return View(waardes);
+                return View(results);
             }
 
         }

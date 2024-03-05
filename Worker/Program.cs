@@ -142,7 +142,7 @@ namespace Worker
             Project project = AssertProject(trainingApi);
 
             Predict.ImageUrl predictURL = new Predict.ImageUrl(imageLink);
-
+            
             Predict.ImagePrediction predict = predictionApi.ClassifyImageUrl(project.Id, publishedModelName, predictURL);
 
             foreach (var item in predict.Predictions)
@@ -156,7 +156,7 @@ namespace Worker
             }
 
             R.Predictions = P;
-            UploadJson(R);
+            UploadJson(R, imageLink);
 
             //WriteToBlob(jsonString);
 
@@ -209,11 +209,11 @@ namespace Worker
             Console.WriteLine("File upload complete");
         }
 
-        public static void UploadJson(Result R)
+        public static void UploadJson(Result R, string imageLink)
         {
             RawImageModel rawImageModel = new RawImageModel();
             rawImageModel.GUID = Guid.NewGuid();
-            rawImageModel.ImgURL = "test";
+            rawImageModel.ImgURL = imageLink;
 
             R.RawImage = rawImageModel;
             

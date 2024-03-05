@@ -25,19 +25,24 @@ namespace BirdAPI.Controllers
 
         [Route("api/getjson")]
         [HttpGet]
-        public Result GetJson() {
+        public List<Result> GetJson() {
+            List<Result> results = new List<Result>();
 
-            Guid guid = new Guid("f2818e4f-16e2-4cce-978d-318b6aeef522");
+            BlobContainerClient container = new BlobContainerClient(blobStorageConnectionString, blobContainerResult);
 
-            var container = new BlobContainerClient(blobStorageConnectionString, blobContainerResult);
-            var blob = container.GetBlobClient(guid.ToString());
+            foreach (BlobItem blobItem in container.GetBlobs())
+            {
+                var blob = container.GetBlobClient(blobItem.Name);
+                BlobDownloadResult downloadResult = blob.DownloadContent();
+                string blobContents = downloadResult.Content.ToString();
 
-            BlobDownloadResult downloadResult = blob.DownloadContent();
-            string blobContents = downloadResult.Content.ToString();
+                Result result = JsonSerializer.Deserialize<Result>(blobContents);
 
+                results.Add(result);
+            }
 
-            Result result = JsonSerializer.Deserialize<Result>(blobContents);
-            return result;
+           
+            return results;
         }
     }
 }

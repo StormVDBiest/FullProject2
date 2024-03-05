@@ -1,20 +1,24 @@
-﻿@model BirdMVC.Models.Result
+﻿@model List<BirdMVC.Models.Result>
 @{
     ViewBag.Title = "Home Page";
 }
 <section>
-    <div id="card">
-        <div id="Image">
-            <img src="@Model.RawImage.ImgURL" />
+    @foreach (BirdMVC.Models.Result f in Model)
+    {
+        <div id="card">
+            <div id="Image">
+                <img src="@f.RawImage.ImgURL" />
+            </div>
+            <div id="predictions">
+                @foreach (BirdMVC.Models.Prediction item in f.Predictions)
+                {
+                    <ol>
+                        <li>@item.TagName - @item.probability</li>
+                    </ol>
+                }
+            </div>
         </div>
-        <div id="predictions">
-            @foreach (BirdMVC.Models.Prediction item in Model.Predictions)
-            {
-                <ol>
-                    <li>@item.TagName - @item.probability</li>
-                </ol>
-            }
-        </div>
-    </div>
+    }
+
 </section>
 
