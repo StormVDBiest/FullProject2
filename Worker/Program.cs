@@ -1,25 +1,22 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using static System.Net.WebRequestMethods;
-using Azure.Storage.Blobs;
 using System.Text;
-using Azure.Storage.Blobs.Models;
 using System.Text.Json;
 using Predict = Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
-using System.Security.Policy;
 
 namespace Worker
 {
     internal class Program
     {
         public static string blobStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=birddetectionstorage;AccountKey=plrsXLGvDZ682VmaLgWHysjlu6xPANgSfblGF4vwLd1gfNxdd9Aaxg3gCNiuPllG5jR6yY6lxP/p+AStM7hHgw==;EndpointSuffix=core.windows.net";
-        
+
         public static string blobContainerRawImage = "rawimages";
         public static string blobContainerResult = "results";
         public static string blobContainerThumbnail = "thumbnails";
@@ -51,7 +48,7 @@ namespace Worker
                 Endpoint = endpoint
             };
             return trainingApi;
-            
+
         }
 
         public static CustomVisionPredictionClient AuthenticatePrediction(string endpoint, string predictionKey)
@@ -136,12 +133,12 @@ namespace Worker
             Console.WriteLine("File upload complete");
 
             R = Prediction(rawImageLink);
-            
+
             UploadJson(R, rawImageLink);
 
             return rawImageLink;
         }
-        
+
         private static void TestIteration(CustomVisionPredictionClient predictionApi, Project project, string URL)
         {
             Console.WriteLine("Making a prediction:");
@@ -159,7 +156,7 @@ namespace Worker
 
         }
 
-        
+
         public static void UploadJson(Result R, string imageLink)
         {
             RawImageModel rawImageModel = new RawImageModel();
@@ -167,7 +164,7 @@ namespace Worker
             rawImageModel.ImgURL = imageLink;
 
             R.RawImage = rawImageModel;
-           
+
             Console.WriteLine("Starting Json upload...");
 
             R.GUID = Guid.NewGuid();
