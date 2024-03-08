@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Predict = Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
 
+
 namespace Worker
 {
     internal class Program
@@ -129,7 +130,7 @@ namespace Worker
             var container = new BlobContainerClient(blobStorageConnectionString, blobContainerRawImage);
             var blob = container.GetBlobClient(uniqueID.ToString());
             var result = blob.Upload(path);
-
+            
             string rawImageLink = blob.Uri.ToString();
 
             Console.WriteLine("File upload complete");
@@ -219,5 +220,6 @@ namespace Worker
             R.Predictions = P;
             return R;
         }
+
     }
 }
