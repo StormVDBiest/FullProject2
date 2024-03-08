@@ -5,6 +5,7 @@ using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training;
 using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,27 +16,28 @@ namespace Worker
 {
     internal class Program
     {
-        public static string blobStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=birddetectionstorage;AccountKey=plrsXLGvDZ682VmaLgWHysjlu6xPANgSfblGF4vwLd1gfNxdd9Aaxg3gCNiuPllG5jR6yY6lxP/p+AStM7hHgw==;EndpointSuffix=core.windows.net";
+        public static string blobStorageConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
 
-        public static string blobContainerRawImage = "rawimages";
-        public static string blobContainerResult = "results";
-        public static string blobContainerThumbnail = "thumbnails";
+        public static string blobContainerRawImage = ConfigurationManager.AppSettings["ContainerNameRawImage"];
+        public static string blobContainerResult = ConfigurationManager.AppSettings["ContainerNameResult"];
+        public static string blobContainerThumbnail = ConfigurationManager.AppSettings["ContainerNameThumbnails"];
 
-        public static string trainingEndpoint = "https://birddetectionai.cognitiveservices.azure.com/";
-        public static string trainingKey = "7eb92455c73b4f268a6890ae2f07a8b0";
+        public static string trainingEndpoint = ConfigurationManager.AppSettings["trainingEndpoint"];
+        public static string trainingKey = ConfigurationManager.AppSettings["trainingKey"];
 
-        public static string projectName = "stormBirdFeeder3";
+        public static string projectName = ConfigurationManager.AppSettings["projectName"];
 
-        public static string predictionEndpoint = "https://birddetectionai-prediction.cognitiveservices.azure.com/";
-        public static string predictionKey = "48c100aca3294956ae35ba67f5ae9f33";
-        public static string predictionResourceId = "/subscriptions/c0aa556b-f65a-4ea4-9ec8-0ed460de5436/resourceGroups/BirdDetectionVisionAI/providers/Microsoft.CognitiveServices/accounts/BirdDetectionAI-Prediction";
+        public static string predictionEndpoint = ConfigurationManager.AppSettings["predictionEndpoint"];
+        public static string predictionKey = ConfigurationManager.AppSettings["predictionKey"];
+        public static string predictionResourceId = ConfigurationManager.AppSettings["predictionResourceId"];
 
-        public static string watchedFolder = "C:\\Users\\Leerlingen\\Desktop\\Vision AI\\Gitclone\\Worker\\Watched\\";
+        public static string watchedFolder = ConfigurationManager.AppSettings["watchedFolder"];
 
-        private static string publishedModelName = "Iteration1";
+        private static string publishedModelName = ConfigurationManager.AppSettings["publishedModelName"];
 
         static void Main(string[] args)
         {
+            
             FileWatcher(watchedFolder);
             Console.ReadLine();
         }
