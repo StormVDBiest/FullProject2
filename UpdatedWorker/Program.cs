@@ -37,6 +37,10 @@ namespace Worker
 
         private static string publishedModelName = "Iteration1";
 
+        public static int thumbnailHeigt = 100;
+        public static int thumbnailWidth = 100;
+
+
         static void Main(string[] args)
         {
             FileWatcher(watchedFolder);
@@ -212,9 +216,7 @@ namespace Worker
 
             return P;
         }
-
-
-        public static ThumbnailModel ResizeAndUploadImage(string inputPath, int width, int height)
+        public static ThumbnailModel ResizeAndUploadThumbnail(string inputPath, int width, int height)
         {
             ThumbnailModel model = new ThumbnailModel();
             // Load the image
@@ -254,7 +256,7 @@ namespace Worker
             Result R = new Result();
 
             R.RawImage = UploadRaw(path);
-            R.Thumbnail = ResizeAndUploadImage(path, 100, 100);
+            R.Thumbnail = ResizeAndUploadThumbnail(path, thumbnailWidth, thumbnailHeigt);
 
             R.Predictions = Prediction(R.RawImage.ImgURL);
             UploadJson(R);
