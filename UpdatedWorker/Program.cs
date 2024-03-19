@@ -13,6 +13,7 @@ using System.Text.Json;
 using Predict = Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
+using System.Reflection.Metadata;
 
 namespace Worker
 {
@@ -112,33 +113,33 @@ namespace Worker
             string value = $"Created: {e.FullPath}";
             Console.WriteLine(value);
 
-            UploadRaw(e.FullPath);
-            ResizeAndUploadImage(e.FullPath, "test", 100, 100);
-
+            HandleOrder(e.FullPath);
         }
 
-        public static string UploadRaw(string path)
+        public static RawImageModel UploadRaw(string path)
         {
-            List<Prediction> P = new List<Prediction>();
+            RawImageModel model = new RawImageModel();
             Result R = new Result();
 
             Console.WriteLine("Starting...");
 
             Guid uniqueID = Guid.NewGuid();
+            model.GUID = uniqueID;
 
             var container = new BlobContainerClient(blobStorageConnectionString, blobContainerRawImage);
             var blob = container.GetBlobClient(uniqueID.ToString());
             var result = blob.Upload(path);
 
             string rawImageLink = blob.Uri.ToString();
+            model.ImgURL = rawImageLink;
 
             Console.WriteLine("File upload complete");
 
-            R = Prediction(rawImageLink);
+            //R = Prediction(rawImageLink);
 
-            UploadJson(R, rawImageLink);
+            //UploadJson(R, rawImageLink);
 
-            return rawImageLink;
+            return model;
         }
 
         private static void TestIteration(CustomVisionPredictionClient predictionApi, Project project, string URL)
@@ -159,14 +160,8 @@ namespace Worker
         }
 
 
-        public static void UploadJson(Result R, string imageLink)
+        public static void UploadJson(Result R)
         {
-            RawImageModel rawImageModel = new RawImageModel();
-            rawImageModel.GUID = Guid.NewGuid();
-            rawImageModel.ImgURL = imageLink;
-
-            R.RawImage = rawImageModel;
-
             Console.WriteLine("Starting Json upload...");
 
             R.GUID = Guid.NewGuid();
@@ -187,9 +182,8 @@ namespace Worker
 
             Console.WriteLine("File upload complete");
         }
-        private static Result Prediction(string imageLink)
+        private static List<Prediction> Prediction(string imageLink)
         {
-            Result R = new Result();
             List<Prediction> P = new List<Prediction>();
 
             Console.WriteLine("Making a prediction:");
@@ -216,13 +210,13 @@ namespace Worker
                 P.Add(prediction);
             }
 
-            R.Predictions = P;
-            return R;
+            return P;
         }
 
 
-        public static void ResizeAndUploadImage(string inputPath, string blobName, int width, int height)
+        public static ThumbnailModel ResizeAndUploadImage(string inputPath, int width, int height)
         {
+            ThumbnailModel model = new ThumbnailModel();
             // Load the image
             using (var image = SixLabors.ImageSharp.Image.Load(inputPath))
             {
@@ -236,8 +230,10 @@ namespace Worker
                 // Create the container if it does not exist
                 blobContainerClient.CreateIfNotExists();
 
+                Guid guid = Guid.NewGuid();
+                model.GUID = guid;
                 // Get a reference to a blob
-                var blobClient = blobContainerClient.GetBlobClient(blobName);
+                var blobClient = blobContainerClient.GetBlobClient(guid.ToString());
 
                 // Convert the ImageSharp image to a stream and upload it
                 using (var stream = new MemoryStream())
@@ -245,8 +241,23 @@ namespace Worker
                     image.SaveAsJpeg(stream);
                     stream.Position = 0; // Reset stream position to the beginning
                     blobClient.Upload(stream);
+
+                    string rawImageLink = blobServiceClient.Uri.ToString();
+                    model.ImgURL = rawImageLink;
                 }
             }
+            return model;
+        }
+
+        public static void HandleOrder(string path)
+        {
+            Result R = new Result();
+
+            R.RawImage = UploadRaw(path);
+            R.Thumbnail = ResizeAndUploadImage(path, 100, 100);
+
+            R.Predictions = Prediction(R.RawImage.ImgURL);
+            UploadJson(R);
         }
 
     }
