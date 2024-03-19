@@ -13,7 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdAPI", "BirdAPI\BirdAPI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdMVC", "BirdMVC\BirdMVC.csproj", "{27877B9B-9704-4FE5-ACCC-3FD19B46ADCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2E95702E-784E-4D32-A9CE-84227FCA06C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{2E95702E-784E-4D32-A9CE-84227FCA06C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdatedWorker", "UpdatedWorker\UpdatedWorker.csproj", "{881FF69E-5786-472F-90B6-211173666469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{2E95702E-784E-4D32-A9CE-84227FCA06C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E95702E-784E-4D32-A9CE-84227FCA06C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E95702E-784E-4D32-A9CE-84227FCA06C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{881FF69E-5786-472F-90B6-211173666469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{881FF69E-5786-472F-90B6-211173666469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{881FF69E-5786-472F-90B6-211173666469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{881FF69E-5786-472F-90B6-211173666469}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
