@@ -218,13 +218,15 @@ namespace Worker
         }
         public static ThumbnailModel ResizeAndUploadThumbnail(string inputPath, int width, int height)
         {
+            Console.WriteLine("Resizeing thumbnail");
             ThumbnailModel model = new ThumbnailModel();
             // Load the image
             using (var image = SixLabors.ImageSharp.Image.Load(inputPath))
             {
                 // Resize the image to the specified size
                 image.Mutate(x => x.Resize(width, height));
-
+                Console.WriteLine("Resizeing thumbnail done");
+                Console.WriteLine("Uploading thumbnail");
                 // Initialize the BlobServiceClient and BlobContainerClient
                 var blobServiceClient = new BlobServiceClient(blobStorageConnectionString);
                 var blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerThumbnail);
@@ -244,10 +246,11 @@ namespace Worker
                     stream.Position = 0; // Reset stream position to the beginning
                     blobClient.Upload(stream);
 
-                    string rawImageLink = blobServiceClient.Uri.ToString();
-                    model.ImgURL = rawImageLink;
+                    string imageLink = blobServiceClient.Uri.ToString();
+                    model.ImgURL = imageLink;
                 }
             }
+            Console.WriteLine("Upload thumbnail done");
             return model;
         }
 

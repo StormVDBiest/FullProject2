@@ -9,6 +9,5 @@ namespace BirdMVC.Models
     {
         public int ResultCount { get; set; }
         public List<Result> Results { get; set; }
-
     }
 }

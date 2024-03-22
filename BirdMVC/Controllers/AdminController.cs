@@ -92,6 +92,7 @@ namespace BirdMVC.Controllers
 
                     adminClass.Results = results;
                     adminClass.ResultCount = results.Count;
+
                     return View(adminClass);
                 }
             }

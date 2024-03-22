@@ -9,6 +9,7 @@ namespace BirdMVC.Models
     {
         public Guid GUID { get; set; }
         public RawImageModel RawImage { get; set; }
+        public ThumbnailModel Thumbnail { get; set; }
         public List<Prediction> Predictions { get; set; } = new List<Prediction>();
     }
 
@@ -19,6 +20,12 @@ namespace BirdMVC.Models
     }
 
     public class RawImageModel()
+    {
+        public Guid GUID { get; set; }
+        public string ImgURL { get; set; }
+    }
+
+    public class ThumbnailModel()
     {
         public Guid GUID { get; set; }
         public string ImgURL { get; set; }
