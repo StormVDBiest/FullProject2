@@ -37,8 +37,8 @@ namespace Worker
 
         private static string publishedModelName = "Iteration1";
 
-        public static int thumbnailHeigt = 100;
-        public static int thumbnailWidth = 100;
+        public static int thumbnailHeigt = 320;
+        public static int thumbnailWidth = 180;
 
 
         static void Main(string[] args)
@@ -247,7 +247,7 @@ namespace Worker
                     blobClient.Upload(stream);
 
                     string imageLink = blobServiceClient.Uri.ToString();
-                    model.ImgURL = imageLink;
+                    model.ImgURL = $"https://birddetectionstorage.blob.core.windows.net/thumbnails/{guid}";
                 }
             }
             Console.WriteLine("Upload thumbnail done");
