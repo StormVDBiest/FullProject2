@@ -126,7 +126,7 @@ namespace Worker
             RawImageModel model = new RawImageModel();
             Result R = new Result();
 
-            Console.WriteLine("Starting...");
+            Console.Write("Starting Raw Image Upload");
 
             Guid uniqueID = Guid.NewGuid();
             model.GUID = uniqueID;
@@ -138,12 +138,12 @@ namespace Worker
             string rawImageLink = blobRaw.Uri.ToString();
             model.ImgURL = rawImageLink;
 
-            Console.WriteLine("File upload complete");
+            Console.WriteLine(" ----- done");
 
             //R = Prediction(rawImageLink);
 
             //UploadJson(R, rawImageLink);
-            
+
             return model;
         }
 
@@ -167,7 +167,7 @@ namespace Worker
 
         public static void UploadJson(Result R)
         {
-            Console.WriteLine("Starting Json upload...");
+            Console.Write("Starting Json upload");
 
             R.GUID = Guid.NewGuid();
 
@@ -185,7 +185,7 @@ namespace Worker
             BlobDownloadResult downloadResult = blob.DownloadContent();
             string blobContents = downloadResult.Content.ToString();
 
-            Console.WriteLine("File upload complete");
+            Console.WriteLine(" ----- done");
         }
         private static List<Prediction> Prediction(string imageLink)
         {
@@ -214,20 +214,20 @@ namespace Worker
 
                 P.Add(prediction);
             }
-
+            
             return P;
         }
         public static ThumbnailModel ResizeAndUploadThumbnail(string inputPath, int width, int height)
         {
-            Console.WriteLine("Resizeing thumbnail");
+            Console.Write("Resizeing thumbnail");
             ThumbnailModel model = new ThumbnailModel();
             // Load the image
             using (var image = SixLabors.ImageSharp.Image.Load(inputPath))
             {
                 // Resize the image to the specified size
                 image.Mutate(x => x.Resize(width, height));
-                Console.WriteLine("Resizeing thumbnail done");
-                Console.WriteLine("Uploading thumbnail");
+                Console.WriteLine(" ----- done");
+                Console.Write("Uploading thumbnail");
                 // Initialize the BlobServiceClient and BlobContainerClient
 
                 Guid guid = Guid.NewGuid();
@@ -254,8 +254,8 @@ namespace Worker
                 string imageLink = blobThumb.Uri.ToString();
                 model.ImgURL = imageLink;
             }
-            Console.WriteLine("Upload thumbnail done");
-            
+            Console.WriteLine(" ----- done");
+
             return model;
         }
 
