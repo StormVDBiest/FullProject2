@@ -14,6 +14,7 @@ using Predict = Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System.Reflection.Metadata;
+using System.Xml;
 
 namespace Worker
 {
@@ -37,8 +38,8 @@ namespace Worker
 
         private static string publishedModelName = "Iteration1";
 
-        public static int thumbnailHeigt = 320;
-        public static int thumbnailWidth = 180;
+        public static int thumbnailHeigt = 150;
+        public static int thumbnailWidth = 150;
 
 
         static void Main(string[] args)
@@ -130,11 +131,11 @@ namespace Worker
             Guid uniqueID = Guid.NewGuid();
             model.GUID = uniqueID;
 
-            var container = new BlobContainerClient(blobStorageConnectionString, blobContainerRawImage);
-            var blob = container.GetBlobClient(uniqueID.ToString());
-            var result = blob.Upload(path);
+            var containerRaw = new BlobContainerClient(blobStorageConnectionString, blobContainerRawImage);
+            var blobRaw = containerRaw.GetBlobClient(uniqueID.ToString());
+            var result = blobRaw.Upload(path);
 
-            string rawImageLink = blob.Uri.ToString();
+            string rawImageLink = blobRaw.Uri.ToString();
             model.ImgURL = rawImageLink;
 
             Console.WriteLine("File upload complete");
@@ -142,7 +143,7 @@ namespace Worker
             //R = Prediction(rawImageLink);
 
             //UploadJson(R, rawImageLink);
-
+            
             return model;
         }
 
@@ -228,16 +229,18 @@ namespace Worker
                 Console.WriteLine("Resizeing thumbnail done");
                 Console.WriteLine("Uploading thumbnail");
                 // Initialize the BlobServiceClient and BlobContainerClient
-                var blobServiceClient = new BlobServiceClient(blobStorageConnectionString);
-                var blobContainerClient = blobServiceClient.GetBlobContainerClient(blobContainerThumbnail);
-
-                // Create the container if it does not exist
-                blobContainerClient.CreateIfNotExists();
 
                 Guid guid = Guid.NewGuid();
                 model.GUID = guid;
+                var containerThumb = new BlobContainerClient(blobStorageConnectionString, blobContainerThumbnail);
+                var blobThumb = containerThumb.GetBlobClient(guid.ToString());
+
+                // Create the container if it does not exist
+                containerThumb.CreateIfNotExists();
+
+                
                 // Get a reference to a blob
-                var blobClient = blobContainerClient.GetBlobClient(guid.ToString());
+                var blobClient = containerThumb.GetBlobClient(guid.ToString());
 
                 // Convert the ImageSharp image to a stream and upload it
                 using (var stream = new MemoryStream())
@@ -246,11 +249,13 @@ namespace Worker
                     stream.Position = 0; // Reset stream position to the beginning
                     blobClient.Upload(stream);
 
-                    string imageLink = blobServiceClient.Uri.ToString();
-                    model.ImgURL = $"https://birddetectionstorage.blob.core.windows.net/thumbnails/{guid}";
+                    
                 }
+                string imageLink = blobThumb.Uri.ToString();
+                model.ImgURL = imageLink;
             }
             Console.WriteLine("Upload thumbnail done");
+            
             return model;
         }
 

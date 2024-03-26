@@ -48,8 +48,44 @@
 
         .card {
             margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            max-width: 300px; /* Adjusted width */
+        }
+
+            .card:hover {
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+        .card-img-top {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
         }
     </style>
+
+
 
 </head>
 
