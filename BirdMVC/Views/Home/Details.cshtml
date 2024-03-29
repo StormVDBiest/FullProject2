@@ -1,7 +1,37 @@
-﻿
+﻿@model BirdMVC.Models.Result
+
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details Page";
 }
 
-<h2>Details</h2>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Styles/Details.css"> <!-- Update the path as necessary -->
+</head>
+<body>
+    <div class="detail-wrapper">
+        <div class="detail-header">
+            <h1>@Model.Predictions[0].TagName - Details</h1>
+        </div>
+        <div class="detail-content">
+            <div class="image-box">
+                <img src="@Model.Thumbnail.ImgURL" alt="Detail Image" class="detail-image">
+            </div>
+            <div class="prediction-details">
+                <h2>Predictions</h2>
+                <ul>
+                    @foreach (var predict in Model.Predictions)
+                    {
+                        <li><strong>@predict.TagName</strong> - @predict.Probability%</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <a href="/home/list" class="back-button">Back to List</a>
+    </div>
+</body>
+</html>
