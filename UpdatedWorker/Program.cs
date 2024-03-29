@@ -248,8 +248,6 @@ namespace Worker
                     image.SaveAsJpeg(stream);
                     stream.Position = 0; // Reset stream position to the beginning
                     blobClient.Upload(stream);
-
-                    
                 }
                 string imageLink = blobThumb.Uri.ToString();
                 model.ImgURL = imageLink;
