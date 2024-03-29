@@ -14,6 +14,11 @@ namespace BirdMVC.Controllers
 {
     public class AdminController : Controller
     {
+
+        public ActionResult Index()
+        {
+            return View("Login");
+        }
         // GET: Admin
         public ActionResult Login()
         {

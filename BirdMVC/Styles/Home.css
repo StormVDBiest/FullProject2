@@ -1,171 +1,106 @@
-﻿/* Start Global Rules */
+﻿/* Global Rules */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body {
+body, html {
     font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
 }
 
 a {
+    color: #333;
     text-decoration: none;
 }
 
 ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 .container {
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-left: auto;
-    margin-right: auto;
-}
-/* Small */
-@media (min-width: 768px) {
-    .container {
-        width: 750px;
-    }
-}
-/* Medium */
-@media (min-width: 992px) {
-    .container {
-        width: 970px;
-    }
-}
-/* Large */
-@media (min-width: 1200px) {
-    .container {
-        width: 1170px;
-    }
-}
-/* End Global Rules */
-
-/* Start Landing Page */
-.landing-page header {
-    min-height: 80px;
-    display: flex;
+    max-width: 1170px;
+    margin: auto;
+    padding: 0 15px;
 }
 
-@media (max-width: 767px) {
-    .landing-page header {
-        min-height: auto;
-        display: initial;
-    }
+/* Header */
+header {
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.landing-page header .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-@media (max-width: 767px) {
-    .landing-page header .container {
-        flex-direction: column;
-        justify-content: center;
-    }
-}
-
-.landing-page header .logo {
+header .logo {
     color: #5d5d5d;
-    font-style: italic;
+    font-weight: bold;
     text-transform: uppercase;
-    font-size: 20px;
 }
 
-@media (max-width: 767px) {
-    .landing-page header .logo {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-}
-
-.landing-page header .links {
+header .links ul {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
-@media (max-width: 767px) {
-    .landing-page header .links {
-        text-align: center;
-        gap: 10px;
-    }
+header .links li {
+    padding: 20px;
 }
 
-.landing-page header .links li {
-    margin-left: 30px;
-    color: #5d5d5d;
-    cursor: pointer;
-    transition: .3s;
-}
-
-@media (max-width: 767px) {
-    .landing-page header .links li {
-        margin-left: auto;
-    }
-}
-
-.landing-page header .links li:last-child {
-    border-radius: 20px;
-    padding: 10px 20px;
-    color: #FFF;
-    background-color: #6c63ff;
-}
-
-.landing-page header .links li:not(:last-child):hover {
+header .links li a:hover {
     color: #6c63ff;
 }
 
-.landing-page .content .container {
+/* Landing Page */
+.landing-page .content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 140px;
-    min-height: calc(100vh - 80px);
+    min-height: 90vh;
+    padding: 80px 0;
 }
 
-@media (max-width: 767px) {
-    .landing-page .content .container {
-        gap: 0;
-        min-height: calc(100vh - 101px);
-        justify-content: center;
-        flex-direction: column-reverse;
-    }
-}
-
-@media (max-width: 767px) {
-    .landing-page .content .info {
-        text-align: center;
-        margin-bottom: 15px
-    }
-}
-
-.landing-page .content .info h1 {
-    color: #5d5d5d;
-    font-size: 44px;
-}
-
-.landing-page .content .info p {
-    margin: 0;
-    line-height: 1.6;
-    font-size: 15px;
+.landing-page .info h1 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
     color: #5d5d5d;
 }
 
-.landing-page .content .info button {
-    border: 0;
-    border-radius: 20px;
-    padding: 12px 30px;
-    margin-top: 30px;
-    cursor: pointer;
-    color: #FFF;
-    background-color: #6c63ff;
+.landing-page .info p {
+    font-size: 1.1rem;
 }
 
-.landing-page .content .image img {
+.btn-primary {
+    display: inline-block;
+    background: #6c63ff;
+    color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #5a55e0;
+}
+
+/* Image Styling */
+.landing-page .image img {
     max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
-/* End Landing Page */
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .landing-page .content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .landing-page .info, .landing-page .image {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
