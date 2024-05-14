@@ -31,36 +31,27 @@ ul {
 header {
     background: #ffffff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
-    header .logo {
-        color: #5d5d5d;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
+header .logo {
+    color: #5d5d5d;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
-    header .nav-bar {
-        display: flex;
-        align-items: center;
-    }
+header .links ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    header .links {
-        display: flex;
-        margin-right: 20px;
-    }
+header .links li {
+    padding: 20px;
+}
 
-        header .links li {
-            padding: 20px;
-        }
-
-            header .links li a:hover, header .btn:hover {
-                color: #6c63ff;
-                background-color: #f0f0f0;
-                border-radius: 5px;
-            }
+header .links li a:hover {
+    color: #6c63ff;
+}
 
 /* Landing Page */
 .landing-page .content {
@@ -90,9 +81,9 @@ header {
     transition: background-color 0.3s ease;
 }
 
-    .btn-primary:hover {
-        background-color: #5a55e0;
-    }
+.btn-primary:hover {
+    background-color: #5a55e0;
+}
 
 /* Image Styling */
 .landing-page .image img {
@@ -103,12 +94,12 @@ header {
 
 /* Responsiveness */
 @media (max-width: 992px) {
-    .landing-page .content, .header .nav-bar {
+    .landing-page .content {
         flex-direction: column;
         text-align: center;
     }
 
-    .landing-page .info, .landing-page .image, .header .links {
+    .landing-page .info, .landing-page .image {
         width: 100%;
         margin-bottom: 20px;
     }
