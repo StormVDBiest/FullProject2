@@ -171,6 +171,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Styles\Details.css" />
     <Content Include="Styles\Home.css" />
+    <Content Include="Styles\Home.js" />
     <Content Include="Styles\List.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
