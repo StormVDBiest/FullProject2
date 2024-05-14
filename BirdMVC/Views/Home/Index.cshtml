@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@{
+    Layout = "";
+}
 <html lang="en">
 
 <head>
@@ -10,8 +13,35 @@
 </head>
 
 <body>
-    
-    <script src="~/Styles/Home.js"></script>
+    <!-- Start Landing Page -->
+    <div class="landing-page">
+        <header>
+            <div class="container">
+                <a href="/home/index" class="logo">Vision<b>AI</b></a>
+                <div class="nav-bar">
+                    <ul class="links">
+                        <li><a href="/home/index">Home</a></li>
+                        <li><a href="/home/list">List</a></li>
+                        <li><a href="/home/project">Project</a></li>
+                    </ul>
+                    <a href="/home/try" class="btn btn-primary">Try It Out</a>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <div class="container">
+                <div class="info">
+                    <h1>Vision<b>AI</b></h1>
+                    <p>Recognize bird species with AI.</p>
+                    <a href="/home/list" class="btn btn-primary">Check Our Results</a>
+                </div>
+                <div class="image">
+                    <img src="https://i.postimg.cc/65QxYYzh/001234.png" alt="Vision AI Example">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 
 </html>

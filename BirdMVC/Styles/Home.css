@@ -1,131 +1,115 @@
-﻿/* css to reset all the designs */
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
-
+﻿/* Global Rules */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-html {
-    font-size: 62.5%;
-    font-family: 'Roboto', sans-serif;
-}
-
-li {
-    list-style: none;
+body, html {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
 }
 
 a {
+    color: #333;
     text-decoration: none;
 }
 
-/* css to reset all the designs */
-
-/* add styles on elements */
-
-.header {
-    border-bottom: 1px solid #E2E8F0;
-    background-color: #222;
+ul {
+    list-style: none;
 }
 
-.navbar {
+.container {
+    max-width: 1170px;
+    margin: auto;
+    padding: 0 15px;
+}
+
+/* Header */
+header {
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 1.5rem;
-}
-
-.hamburger {
-    display: none;
-}
-
-.bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    /* background-color: #101010; */
-    background-color: #fff;
-}
-
-.nav-menu {
-    display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
-.nav-item {
-    margin-left: 5rem;
-}
-
-.nav-link {
-    /* font-size: 1.6rem; */
-    font-size: 2rem;
-    font-weight: 400;
-    /* color: #475569; */
-    color: #fff;
-    /* change */
-}
-
-    .nav-link:hover {
-        color: #482ff7;
+    header .logo {
+        color: #5d5d5d;
+        font-weight: bold;
+        text-transform: uppercase;
     }
 
-.nav-logo {
-    /* font-size: 2.1rem; */
-    font-size: 3rem;
-    font-weight: 500;
-    /* color: #482ff7; */
-    color: #fff;
+    header .nav-bar {
+        display: flex;
+        align-items: center;
+    }
+
+    header .links {
+        display: flex;
+        margin-right: 20px;
+    }
+
+        header .links li {
+            padding: 20px;
+        }
+
+            header .links li a:hover, header .btn:hover {
+                color: #6c63ff;
+                background-color: #f0f0f0;
+                border-radius: 5px;
+            }
+
+/* Landing Page */
+.landing-page .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 90vh;
+    padding: 80px 0;
 }
 
-@media only screen and (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 5rem;
+.landing-page .info h1 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #5d5d5d;
+}
+
+.landing-page .info p {
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    background: #6c63ff;
+    color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #5a55e0;
+    }
+
+/* Image Styling */
+.landing-page .image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .landing-page .content, .header .nav-bar {
         flex-direction: column;
-        /* background-color: #fff; */
-        background-color: #222;
-        width: 100%;
-        border-radius: 10px;
         text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
     }
 
-    .nav-link {
-        color: #fff;
+    .landing-page .info, .landing-page .image, .header .links {
+        width: 100%;
+        margin-bottom: 20px;
     }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-item {
-        margin: 2.5rem 0;
-    }
-
-    .hamburger {
-        display: block;
-        cursor: pointer;
-    }
-
-        .hamburger.active .bar:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active .bar:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-
-        .hamburger.active .bar:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
 }
-
-/* add styles on elements */
